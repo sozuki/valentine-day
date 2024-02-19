@@ -8,7 +8,15 @@ const config: Config = {
   ],
   theme: {
     extend: {
-
+      keyframes: {
+        gradient: {
+          "0%": { backgroundPosition: "0% 50%" },
+          "100%": { backgroundPosition: "100% 50%" },
+        }
+      },
+      animation: {
+        gradient: "gradient 6s linear infinite",
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":

@@ -3,6 +3,7 @@ import {useState} from "react";
 import clsx from "clsx";
 import {motion, useAnimationControls} from "framer-motion";
 import {useDebouncedCallback} from "use-debounce";
+import Link from "next/link";
 
 export function Close() {
   const [isShown, setIsShown] = useState(true);
@@ -23,9 +24,24 @@ export function Close() {
 }
 
 export function Yes() {
-  return <button
-    className="w-36 h-14 text-white bg-pink-600 rounded-2xl drop-shadow-lg absolute left-40 z-20">Yes</button>
+  return (
+    <Link href="/yes">
+      <button
+        className="w-36 h-14 text-white bg-pink-600 rounded-2xl drop-shadow-lg absolute left-40 z-20">Yes
+      </button>
+    </Link>
+  )
   
+}
+
+export function Yes2() {
+  return (
+    <Link href="/yes">
+      <button
+        className="w-full h-14 text-white bg-pink-600 rounded-2xl drop-shadow-lg">Yes
+      </button>
+    </Link>
+  )
 }
 
 interface Stage {
@@ -60,16 +76,35 @@ export function No() {
     })
   }
   
-  const handleNo = useDebouncedCallback(async() => {
+  const handleNo = useDebouncedCallback(async () => {
     await animate(currentStage);
     if (currentStage != finalStage) setCurrentStage(prevState => prevState + 1);
   }, 300)
   
-  return <motion.button
-    className="w-36 h-14 text-white bg-rose-950 rounded-2xl drop-shadow-lg absolute right-40"
-    animate={controls}
-    onMouseEnter={handleNo}
-    onMouseLeave={ currentStage === finalStage ? async () => await animate(finalStage-1) : () => {}}
-  >No</motion.button>
+  return (
+    <Link href={currentStage > 3 ? "/no" : "/"}>
+      <motion.button
+        className="w-36 h-14 text-white bg-rose-950 rounded-2xl drop-shadow-lg absolute right-40"
+        animate={controls}
+        onMouseEnter={handleNo}
+        onMouseLeave={currentStage === finalStage ? async () => await animate(finalStage - 1) : () => {
+        }}
+      >No
+      </motion.button>
+    </Link>
+  )
 }
 
+export function Back() {
+  return (
+    <Link href="/">
+      <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" fill="#000000" className="w-10 h-10">
+        <g>
+          <path fill="#000000" d="M224 480h640a32 32 0 110 64H224a32 32 0 010-64z"></path>
+          <path fill="#000000"
+                d="M237.248 512l265.408 265.344a32 32 0 01-45.312 45.312l-288-288a32 32 0 010-45.312l288-288a32 32 0 1145.312 45.312L237.248 512z"></path>
+        </g>
+      </svg>
+    </Link>
+  )
+}
